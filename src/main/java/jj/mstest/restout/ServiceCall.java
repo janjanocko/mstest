@@ -14,21 +14,21 @@ import java.util.List;
 @Component
 //@Scope(value = "session")
 public class ServiceCall {
+    //TODO move state to upper layer
     @Autowired
     public ServiceCall(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
     private RestTemplate restTemplate;
-
+    //in real application all URLs and paths would be in app properties
     private static final String serverUrl = "https://cloud.memsource.com/web";
-    private String token;
 
+    private String token;
 
     public boolean loggedIn() {
         return token != null;
     }
-
 
     public String login(String username, String password) {
         //  jan.janocko/msheslo!
@@ -49,13 +49,13 @@ public class ServiceCall {
         }
         String url = serverUrl + "/api/v3/project/list?token=" + token;
         //String token = "8SFNNjrSnRcNL1kPV3PoZnciR07ZUlr6eJCeOhuGSlrDJvsRzsGpg8p9Fzpgj3O70";
-        Project[] projects = restTemplate.getForObject(url, Project[].class);
         ResponseEntity<Project[]> projectsResponseEntity = restTemplate.getForEntity(url, Project[].class);
         if (projectsResponseEntity.getStatusCode().is4xxClientError() && projectsResponseEntity.getStatusCode().is5xxServerError()) {
             this.token = null;
             //TODO should throw error instead?
             return new ArrayList<>();
         }
-        return new ArrayList<>(Arrays.asList(projects));
+
+        return new ArrayList<>(Arrays.asList(projectsResponseEntity.getBody()));
     }
 }

@@ -65,6 +65,7 @@ public class CentralControllerTest {
         Credentials newCredentials = new Credentials();
         newCredentials.setUsername("user");
         newCredentials.setPassword("pass");
+        when(dbLayer.saveCredentials(any(Credentials.class))).thenReturn(newCredentials);
         subject.addCredentials(newCredentials);
         verify(dbLayer).saveCredentials(newCredentials);
     }

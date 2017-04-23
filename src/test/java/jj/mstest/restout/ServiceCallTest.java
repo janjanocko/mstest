@@ -26,7 +26,7 @@ public class ServiceCallTest {
     }
 
     @Test
-    public void testLoginSuccessful() throws Exception {
+    public void testLoginSuccessfulAndGetProjects() throws Exception {
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken("secretToken");
         ResponseEntity<LoginResponse> positiveResponse = new ResponseEntity<>(loginResponse, HttpStatus.ACCEPTED);
@@ -39,11 +39,21 @@ public class ServiceCallTest {
 
     @Test
     public void testGetProjects() throws Exception {
+        //prepare the state to be able to call getProjects
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setToken("secretToken");
+        ResponseEntity<LoginResponse> positiveResponse = new ResponseEntity<>(loginResponse, HttpStatus.ACCEPTED);
+        when(restTemplate.postForEntity(anyString(), isNull(), eq(LoginResponse.class))).thenReturn(positiveResponse);
+        subject.login("user", "pwd");
+        //subject prepared
+
         Project project1 = new Project();
         project1.setName("1");
         Project project2 = new Project();
         project2.setName("2");
-        when(restTemplate.getForObject(anyString(), eq(Project[].class))).thenReturn(new Project[]{project1, project2});
+        ResponseEntity<Project[]> positiveGetResponse = new ResponseEntity<>(new Project[]{project1, project2}, HttpStatus.ACCEPTED);
+
+        when(restTemplate.getForEntity(anyString(), eq(Project[].class))).thenReturn(positiveGetResponse);
         List<Project> projects = subject.getProjects();
         assertEquals(2, projects.size());
     }
