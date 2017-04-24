@@ -1,13 +1,12 @@
 package jj.mstest.db;
 
-import jj.mstest.Credentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DbLayer {
+public class PersistenceService {
     @Autowired
-    public DbLayer(CredentialsRepository credentialsRepository) {
+    public PersistenceService(CredentialsRepository credentialsRepository) {
         this.credentialsRepository = credentialsRepository;
     }
 

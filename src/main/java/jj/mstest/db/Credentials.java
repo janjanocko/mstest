@@ -1,4 +1,4 @@
-package jj.mstest;
+package jj.mstest.db;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

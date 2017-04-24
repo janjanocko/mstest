@@ -1,6 +1,8 @@
 package jj.mstest.controller;
 
-import jj.mstest.Credentials;
+import jj.mstest.db.Credentials;
+import jj.mstest.db.PersistenceService;
+import jj.mstest.restClient.RestClient;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
@@ -14,14 +16,16 @@ import static org.mockito.Mockito.when;
 public class UserRestControllerTest {
     @Test
     public void testAddCredentials() throws Exception {
-        CentralController centralController = mock(CentralController.class);
-        UserRestController subject = new UserRestController(centralController);
+        RestClient restClient = mock(RestClient.class);
+        PersistenceService persistenceService = mock(PersistenceService.class);
         Credentials newCredentials = new Credentials();
         newCredentials.setUsername("user");
         newCredentials.setPassword("pass");
-        when(centralController.addCredentials(any(Credentials.class))).thenReturn(1L);
+        when(persistenceService.saveCredentials(any(Credentials.class))).thenReturn(newCredentials);
+
+        UserRestController subject = new UserRestController(restClient, persistenceService);
         ResponseEntity result = subject.addCredentials(newCredentials);
         assertTrue(result.getStatusCode().is2xxSuccessful());
-        verify(centralController).addCredentials(newCredentials);
+        verify(persistenceService).saveCredentials(newCredentials);
     }
 }

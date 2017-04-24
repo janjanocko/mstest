@@ -1,23 +1,21 @@
 package jj.mstest.db;
 
-import jj.mstest.Credentials;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class DbLayerTest {
-    private DbLayer subject;
+public class PersistenceServiceTest {
+    private PersistenceService subject;
     CredentialsRepository credentialsRepository;
 
     @Before
     public void setUp() throws Exception {
         credentialsRepository = mock(CredentialsRepository.class);
-        subject = new DbLayer(credentialsRepository);
+        subject = new PersistenceService(credentialsRepository);
     }
 
     @Test

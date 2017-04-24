@@ -1,6 +1,5 @@
 package jj.mstest.db;
 
-import jj.mstest.Credentials;
 import org.springframework.data.repository.CrudRepository;
 
 
