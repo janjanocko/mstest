@@ -2,39 +2,33 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Memsource test app - account details</title>
+    <title>Jan Janocko test app - account details</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script language="JavaScript">
-        $(document).ready(function(){
-            $("#submitButton").on('click', function(e){
+        $(document).ready(function () {
+            $("#submitButton").on('click', function (e) {
+                e.preventDefault();
+                var userData = {username: $('#usernameInput').val(), password: $('#passwordInput').val()}
                 $.ajax({
-                    url: 'http://localhost:8080/user',
-                    type : "POST",
-                    dataType : 'json',
-                    data : $("#form").serialize(),
-                    success : function(result) {
-                        // you can see the result from the console
-                        // tab of the developer tools
+                    url: "/user",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(userData),
+                    success: function (result) {
                         alert('Data saved successfully');
-                        e.preventDefault();
-                        //console.log(result);
                     },
-                    error: function(xhr, resp, text) {
-                        alert('Error when saving data');
+                    error: function (errorMsg) {
+                        alert(errorMsg);
                         e.preventDefault();
-                        //console.log(xhr, resp, text);
+                        console.log(xhr, resp, text);
                     }
                 })
             });
         });
 
-        $("#form").submit(function(e){
-            alert('submit intercepted');
-            e.preventDefault(e);
-        });
 
     </script>
 </head>
@@ -43,19 +37,20 @@
 <div class="container">
     <h2>Save your account access information here:</h2>
     <form id="form">
-    <div class="form-group">
-        <label for="usernameInput">Name:</label>
-        <input type="text" class="form-control" id="usernameInput" name="userName">
-    </div>
+        <div class="form-group">
+            <label for="usernameInput">Name:</label>
+            <input type="text" class="form-control" id="usernameInput" name="userName">
+        </div>
 
-    <div class="form-group">
-        <label for="passwordInput">Password:</label>
-        <input type="text" class="form-control" id="passwordInput" name="password>
-    </div>
+        <div class="form-group">
+            <label for="passwordInput">Password:</label>
+            <input type="text" class="form-control" id="passwordInput" name="password">
+        </div>
+    </form>
     <div class="form-group">
         <button class="form-group" id="submitButton">Submit</button>
     </div>
-    </form>
+
     <p><a href="projectList.html">To project list page</a></p>
 </div>
 

@@ -1,4 +1,4 @@
-package jj.mstest.restClient;
+package jj.mstest.restClient.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

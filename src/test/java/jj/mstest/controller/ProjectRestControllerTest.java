@@ -3,17 +3,16 @@ package jj.mstest.controller;
 import com.google.common.collect.Lists;
 import jj.mstest.db.Credentials;
 import jj.mstest.db.PersistenceService;
-import jj.mstest.restClient.Project;
 import jj.mstest.restClient.RestClient;
+import jj.mstest.restClient.dto.Project;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class ProjectRestControllerTest {

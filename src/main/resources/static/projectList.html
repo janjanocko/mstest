@@ -2,12 +2,38 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Memsource test app - project list</title>
+    <title>Jan Janocko test app - project list</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script language="JavaScript">
+        $(document).ready(function () {
+            $.ajax({
+                url: '/project',
+                type: "GET",
+                dataType: 'json',
+                success: function (projectsReceived) {
+                    var trHTML = '';
+
+                    $.each(projectsReceived, function (i, project) {
+                        trHTML += '<tr><td>' + project.name + '</td><td>' + project.status + '</td><td>'
+                                + project.sourceLang + '</td><td>' + project.targetLangs + '</td></tr>';
+                    });
+                    $('#tbody').append(trHTML);
+
+                },
+                error: function (errorMsg) {
+                    alert('Retrieving the list of projects failed. Probably you didn\'t set correct username and password in' +
+                            'the previous step');
+                }
+            })
+
+        });
+
+    </script>
 </head>
 
 <body>
@@ -23,17 +49,12 @@
             <th>Target languages</th>
         </tr>
         </thead>
-        <tbody>
-        <tr>
-            <td>Name</td>
-            <td>Status</td>
-            <td>Source language</td>
-            <td>Target languages</td>
-        </tr>
+        <tbody id="tbody">
+
         </tbody>
     </table>
 
-    <p><a href="index.html">Back to account setup page</a> </p>
+    <p><a href="index.html">Back to account setup page</a></p>
 
 </body>
 </html>

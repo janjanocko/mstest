@@ -2,7 +2,7 @@ package jj.mstest.controller;
 
 import jj.mstest.db.Credentials;
 import jj.mstest.db.PersistenceService;
-import jj.mstest.restClient.LoginResponse;
+import jj.mstest.restClient.dto.LoginResponse;
 import jj.mstest.restClient.RestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
